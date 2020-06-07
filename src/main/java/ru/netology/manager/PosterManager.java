@@ -1,14 +1,23 @@
 package ru.netology.manager;
 
-import ru.netology.domain.PurchaseItem;
+import ru.netology.domain.PosterItem;
 
-public class CartManager {
-    private PurchaseItem[] items = new PurchaseItem[0];
+public class PosterManager {
+    private PosterItem[] items = new PosterItem[0];
 
-    public void add(PurchaseItem item) {
+    public PosterManager() {
+    }
+
+    public PosterManager(int amountMovie) {
+        this.amountMovie = amountMovie;
+    }
+
+    private int amountMovie = 10;
+
+    public void add(PosterItem item) {
         // создаём новый массив размером на единицу больше
         int length = items.length + 1;
-        PurchaseItem[] tmp = new PurchaseItem[length];
+        PosterItem[] tmp = new PosterItem[length];
         // itar + tab
         // копируем поэлементно
         // for (int i = 0; i < items.length; i++) {
@@ -21,29 +30,17 @@ public class CartManager {
         items = tmp;
     }
 
-    public PurchaseItem[] getAll() {
-        PurchaseItem[] result = new PurchaseItem[items.length];
+    public PosterItem[] getMovie() {
+
+        PosterItem[] result = new PosterItem[amountMovie];
+
         // перебираем массив в прямом порядке
         // но кладём в результаты в обратном
-        for (int i = 0; i < result.length; i++) {
+        for (int i = 0; i < amountMovie; i++) {
             int index = items.length - i - 1;
             result[i] = items[index];
         }
         return result;
     }
 
-    // наивная реализация
-    public void removeById(int id) {
-        int length = items.length - 1;
-        PurchaseItem[] tmp = new PurchaseItem[length];
-        int index = 0;
-        for (PurchaseItem item : items) {
-            if (item.getId() != id) {
-                tmp[index] = item;
-                index++;
-            }
-        }
-        // меняем наши элементы
-        items = tmp;
-    }
 }
