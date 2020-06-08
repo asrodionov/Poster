@@ -1,9 +1,14 @@
 package ru.netology.manager;
 
 import ru.netology.domain.PosterItem;
+import ru.netology.repository.PosterRepository;
 
 public class PosterManager {
-    private PosterItem[] items = new PosterItem[0];
+    private PosterRepository repository;
+
+    private PosterManager(PosterRepository repository) {
+        this.repository = repository;
+    }
 
     public PosterManager() {
     }
@@ -15,23 +20,12 @@ public class PosterManager {
     private int amountMovie = 10;
 
     public void add(PosterItem item) {
-        // создаём новый массив размером на единицу больше
-        int length = items.length + 1;
-        PosterItem[] tmp = new PosterItem[length];
-        // itar + tab
-        // копируем поэлементно
-        // for (int i = 0; i < items.length; i++) {
-        //   tmp[i] = items[i];
-        // }
-        System.arraycopy(items, 0, tmp, 0, items.length);
-        // кладём последним наш элемент
-        int lastIndex = tmp.length - 1;
-        tmp[lastIndex] = item;
-        items = tmp;
+        repository.save(item);
     }
 
     public PosterItem[] getMovie() {
 
+        PosterItem[] items = repository.findAll();
         PosterItem[] result = new PosterItem[amountMovie];
 
         // перебираем массив в прямом порядке
@@ -41,6 +35,22 @@ public class PosterManager {
             result[i] = items[index];
         }
         return result;
+    }
+
+    public void removeById(int id) {
+        repository.removeById(id);
+    }
+
+    public void removeAll() {
+        repository.removeAll();
+    }
+
+    public void findById(int id) {
+        repository.findById(id);
+    }
+
+    public void findAll() {
+        repository.findAll();
     }
 
 }
