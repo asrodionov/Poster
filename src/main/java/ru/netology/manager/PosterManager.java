@@ -12,7 +12,7 @@ public class PosterManager {
         this.amountMovie = amountMovie;
     }
 
-    private int amountMovie = 10;
+    private int amountMovie;
 
     public void add(PosterItem item) {
         // создаём новый массив размером на единицу больше
@@ -31,6 +31,13 @@ public class PosterManager {
     }
 
     public PosterItem[] getMovie() {
+
+        if (items.length < 10 & amountMovie == 0) {
+            amountMovie = items.length;
+        }
+        if (items.length >= 10 & amountMovie == 0) {
+            amountMovie = 10;
+        }
 
         PosterItem[] result = new PosterItem[amountMovie];
 

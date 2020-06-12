@@ -21,7 +21,6 @@ public class PosterManagerTest {
     private PosterItem tenth = new PosterItem(10,10,"Бладшот","боевик","img1");
     private PosterItem eleventh = new PosterItem(11,11,"Вперед","мультфильм","img2");
 
-
     @BeforeEach
     public void setUp() {
         manager.add(first);
@@ -45,5 +44,4 @@ public class PosterManagerTest {
 
         assertArrayEquals(expected, actual);
     }
-
 }
