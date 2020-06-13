@@ -17,7 +17,7 @@ public class PosterManager {
         this.amountMovie = amountMovie;
     }
 
-    private int amountMovie = 10;
+    private int amountMovie;
 
     public void add(PosterItem item) {
         repository.save(item);
@@ -26,6 +26,14 @@ public class PosterManager {
     public PosterItem[] getMovie() {
 
         PosterItem[] items = repository.findAll();
+
+        if (items.length < 10 & amountMovie == 0) {
+            amountMovie = items.length;
+        }
+        if (items.length >= 10 & amountMovie == 0) {
+            amountMovie = 10;
+        }
+
         PosterItem[] result = new PosterItem[amountMovie];
 
         // перебираем массив в прямом порядке
@@ -45,12 +53,10 @@ public class PosterManager {
         repository.removeAll();
     }
 
-    public void findById(int id) {
-        repository.findById(id);
-    }
+    public PosterItem[] findById(int id) { return repository.findById(id); }
 
-    public void findAll() {
-        repository.findAll();
+    public PosterItem[] findAll() {
+        return repository.findAll();
     }
 
 }

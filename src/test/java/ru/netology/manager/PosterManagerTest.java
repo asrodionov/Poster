@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PosterManagerTest {
+    public class PosterManagerTest {
     @Mock
     private PosterRepository repository;
     @InjectMocks
@@ -57,6 +57,62 @@ public class PosterManagerTest {
         PosterItem[] actual = manager.getMovie();
 
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindAll() {
+
+        PosterItem[] returned = new PosterItem[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        doReturn(returned).when(repository).findAll();
+
+        PosterItem[] expected = new PosterItem[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        PosterItem[] actual = manager.findAll();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindById() {
+
+        PosterItem[] returned = new PosterItem[]{fifth};
+        doReturn(returned).when(repository).findById(5);
+
+        PosterItem[] expected = new PosterItem[]{fifth};
+        PosterItem[] actual = manager.findById(5);
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldRemoveAll() {
+
+        PosterItem[] returned = new PosterItem[0];
+        doReturn(returned).when(repository).findAll();
+        doNothing().when(repository).removeAll();
+
+        manager.removeAll();
+
+        PosterItem[] expected = new PosterItem[0];
+        PosterItem[] actual = manager.findAll();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldRemoveById() {
+
+        PosterItem[] returned = new PosterItem[]{first, second, third, fourth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        doReturn(returned).when(repository).findAll();
+        doNothing().when(repository).removeById(5);
+
+        manager.removeById(5);
+
+        PosterItem[] expected = new PosterItem[]{first, second, third, fourth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        PosterItem[] actual = manager.findAll();
+
+        assertArrayEquals(expected, actual);
+
+        verify(repository).removeById(5);
     }
 
 }

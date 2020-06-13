@@ -5,8 +5,6 @@ import ru.netology.domain.PosterItem;
 public class PosterRepository {
     private PosterItem[] items = new PosterItem[0];
 
-
-
     public void save(PosterItem item) {
         int length = items.length + 1;
         PosterItem[] tmp = new PosterItem[length];
@@ -20,7 +18,7 @@ public class PosterRepository {
         return items;
     }
 
-    public void findById(int id) {
+    public PosterItem[] findById(int id) {
         //int length = items.length - 1;
         PosterItem[] tmp = new PosterItem[1];
         int index = 0;
@@ -31,6 +29,7 @@ public class PosterRepository {
             }
         }
         items = tmp;
+        return items;
     }
 
     public void removeAll() {

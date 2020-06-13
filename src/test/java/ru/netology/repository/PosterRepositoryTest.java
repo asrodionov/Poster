@@ -38,9 +38,7 @@ public class PosterRepositoryTest {
     @Test
     public void shouldFindById() {
 
-        repository.findById(2);
-
-        PosterItem[] actual = repository.findAll();
+        PosterItem[] actual = repository.findById(2);
         PosterItem[] expected = new PosterItem[]{second};
 
         assertArrayEquals(expected, actual);
@@ -49,9 +47,7 @@ public class PosterRepositoryTest {
     @Test
     public void shouldFindByNonId() {
 
-        repository.findById(20);
-
-        PosterItem[] actual = repository.findAll();
+        PosterItem[] actual = repository.findById(20);
         PosterItem[] expected = new PosterItem[]{null};
 
         assertArrayEquals(expected, actual);

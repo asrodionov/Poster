@@ -7,18 +7,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.PosterItem;
-import ru.netology.manager.PosterManager;
 import ru.netology.repository.PosterRepository;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
-public class PosterManagerLessMovieTest {
+public class PosterManagerCustomMovieTest {
     @Mock
     private PosterRepository repository;
     @InjectMocks
-    private PosterManager manager = new PosterManager();
+    private PosterManager manager = new PosterManager(2);
     private PosterItem first = new PosterItem(1,1,"Бладшот","боевик","img1");
     private PosterItem second = new PosterItem(2,2,"Вперед","мультфильм","img2");
     private PosterItem third = new PosterItem(3,3,"Отель Белград","комедия","img3");
@@ -35,12 +34,12 @@ public class PosterManagerLessMovieTest {
     }
 
     @Test
-    public void shouldGetTenMovie() {
+    public void shouldGetTwoMovie() {
 
         PosterItem[] returned = new PosterItem[]{first, second, third, fourth, fifth};
         doReturn(returned).when(repository).findAll();
 
-        PosterItem[] expected = new PosterItem[]{fifth,fourth,third,second,first};
+        PosterItem[] expected = new PosterItem[]{fifth,fourth};
         PosterItem[] actual = manager.getMovie();
 
         assertArrayEquals(expected, actual);
