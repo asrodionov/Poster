@@ -1,0 +1,118 @@
+package ru.netology.manager;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.netology.domain.PosterItem;
+import ru.netology.manager.PosterManager;
+import ru.netology.repository.PosterRepository;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+    public class PosterManagerTest {
+    @Mock
+    private PosterRepository repository;
+    @InjectMocks
+    private PosterManager manager;
+    private PosterItem first = new PosterItem(1,1,"Бладшот","боевик","img1");
+    private PosterItem second = new PosterItem(2,2,"Вперед","мультфильм","img2");
+    private PosterItem third = new PosterItem(3,3,"Отель Белград","комедия","img3");
+    private PosterItem fourth = new PosterItem(4,4,"Бладшот","боевик","img1");
+    private PosterItem fifth = new PosterItem(5,5,"Вперед","мультфильм","img2");
+    private PosterItem sixth = new PosterItem(6,6,"Отель Белград","комедия","img3");
+    private PosterItem seventh = new PosterItem(7,7,"Бладшот","боевик","img1");
+    private PosterItem eighth = new PosterItem(8,8,"Вперед","мультфильм","img2");
+    private PosterItem ninth = new PosterItem(9,9,"Отель Белград","комедия","img3");
+    private PosterItem tenth = new PosterItem(10,10,"Бладшот","боевик","img1");
+    private PosterItem eleventh = new PosterItem(11,11,"Вперед","мультфильм","img2");
+
+
+    @BeforeEach
+    public void setUp() {
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
+        manager.add(eighth);
+        manager.add(ninth);
+        manager.add(tenth);
+        manager.add(eleventh);
+    }
+
+    @Test
+    public void shouldGetTenMovie() {
+
+        PosterItem[] returned = new PosterItem[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        doReturn(returned).when(repository).findAll();
+
+        PosterItem[] expected = new PosterItem[]{eleventh,tenth,ninth,eighth,seventh,sixth,fifth,fourth,third,second};
+        PosterItem[] actual = manager.getMovie();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindAll() {
+
+        PosterItem[] returned = new PosterItem[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        doReturn(returned).when(repository).findAll();
+
+        PosterItem[] expected = new PosterItem[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        PosterItem[] actual = manager.findAll();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindById() {
+
+        PosterItem[] returned = new PosterItem[]{fifth};
+        doReturn(returned).when(repository).findById(5);
+
+        PosterItem[] expected = new PosterItem[]{fifth};
+        PosterItem[] actual = manager.findById(5);
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldRemoveAll() {
+
+        PosterItem[] returned = new PosterItem[0];
+        doReturn(returned).when(repository).findAll();
+        doNothing().when(repository).removeAll();
+
+        manager.removeAll();
+
+        PosterItem[] expected = new PosterItem[0];
+        PosterItem[] actual = manager.findAll();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldRemoveById() {
+
+        PosterItem[] returned = new PosterItem[]{first, second, third, fourth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        doReturn(returned).when(repository).findAll();
+        doNothing().when(repository).removeById(5);
+
+        manager.removeById(5);
+
+        PosterItem[] expected = new PosterItem[]{first, second, third, fourth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        PosterItem[] actual = manager.findAll();
+
+        assertArrayEquals(expected, actual);
+
+        verify(repository).removeById(5);
+    }
+
+}
